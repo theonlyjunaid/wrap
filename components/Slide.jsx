@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 
 function Slide() {
+
     const [show, setShow] = useState(2);
     const slideNext = () => {
         if (show < 3) {
@@ -18,13 +19,8 @@ function Slide() {
         }
 
     }
-    useEffect(() => {
-        if (show < 3) {
-            setShow(show + 1)
-        } else {
-            setShow(1)
-        }
-    }, [2000]);
+
+
     return (
 
         <div className=' relative'>
