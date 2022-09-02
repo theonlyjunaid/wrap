@@ -38,14 +38,14 @@ function Slide() {
                 </div>
             </div>
 
-            <button class="absolute top-0 left-0 z-30 flex items-center justify-center h-full  cursor-pointer group focus:outline-none" >
+            <button className="absolute top-0 left-0 z-30 flex items-center justify-center h-full  cursor-pointer group focus:outline-none" >
 
-                <i class='bx bxs-chevron-left text-5xl text-gray-500 hover:text-black' onClick={slidePrev} ></i>
+                <i className='bx bxs-chevron-left text-5xl text-gray-500 hover:text-black' onClick={slidePrev} ></i>
 
             </button>
-            <button class="absolute top-0 right-0 z-30 flex items-center justify-center h-full cursor-pointer group focus:outline-none" >
+            <button className="absolute top-0 right-0 z-30 flex items-center justify-center h-full cursor-pointer group focus:outline-none" >
 
-                <i class='bx bxs-chevron-right text-5xl text-gray-500 hover:text-black' onClick={slideNext}  ></i>
+                <i className='bx bxs-chevron-right text-5xl text-gray-500 hover:text-black' onClick={slideNext}  ></i>
 
 
             </button>

@@ -9,15 +9,15 @@ import Recommend from '../../components/Recommend'
 
 
 const Post = () => {
-    const router = useRouter()
-    const mamu = router.query.slug
 
+    const router = useRouter()
+    const fileId = router.query.slug
 
     return (
         <>
             <Navbar />
             <ProductHead />
-            <Products />
+            <Products category={fileId} />
             <Recommend />
             <Footer />
         </>

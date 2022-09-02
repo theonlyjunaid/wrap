@@ -10,7 +10,7 @@ export const getItemCategories = [
         Url: '',
     },
     {
-        Name: 'Carbon Fibre',
+        Name: 'CarbonFibre',
         Image: 'https://cdn.shopify.com/s/files/1/0534/7849/0267/files/WrapCart-Img-1270_Carbon_Fibre_1024x1024_crop_center_c0c74b03-e157-439f-ac5a-22103d871fcc.jpg?v=1628724759',
         Url: '',
     },
@@ -31,3 +31,93 @@ export const getItemCategories = [
     },
 ]
 
+export const getItemsByCategories = {
+    "Mate": [
+        {
+            Name: 'Mate',
+            Image: 'https://cdn.shopify.com/s/files/1/0534/7849/0267/files/Matte_skins_11zon_1024x1024_crop_center_cd089a9c-3871-4309-942c-21122d9e1622.jpg?v=1628724697',
+            OriginalPrice: '450',
+            DiscountPrice: '250',
+            Seller: 'MZ Art',
+            Category: 'Mate'
+        },
+        {
+            Name: 'Mate',
+            Image: 'https://cdn.shopify.com/s/files/1/0534/7849/0267/files/Matte_skins_11zon_1024x1024_crop_center_cd089a9c-3871-4309-942c-21122d9e1622.jpg?v=1628724697',
+            OriginalPrice: '450',
+            DiscountPrice: '250',
+            Seller: 'MZ Art',
+            Category: 'Mate'
+        },
+        {
+            Name: 'Mate',
+            Image: 'https://cdn.shopify.com/s/files/1/0534/7849/0267/files/Matte_skins_11zon_1024x1024_crop_center_cd089a9c-3871-4309-942c-21122d9e1622.jpg?v=1628724697',
+            OriginalPrice: '450',
+            DiscountPrice: '250',
+            Seller: 'MZ Art',
+            Category: 'Mate'
+        },
+        {
+            Name: 'Mate',
+            Image: 'https://cdn.shopify.com/s/files/1/0534/7849/0267/files/Matte_skins_11zon_1024x1024_crop_center_cd089a9c-3871-4309-942c-21122d9e1622.jpg?v=1628724697',
+            OriginalPrice: '450',
+            DiscountPrice: '250',
+            Seller: 'MZ Art',
+            Category: 'Mate'
+        }
+    ],
+    "Glossy": [
+        {
+            Name: 'Glossy',
+            Image: 'https://cdn.shopify.com/s/files/1/0534/7849/0267/files/WrapCart-Img-1266_Glossy_1024x1024_crop_center_7edfd854-7253-479d-99f3-4c42b751ef94.jpg?v=1628724705',
+            OriginalPrice: '450',
+            DiscountPrice: '250',
+            Seller: 'MZ Art',
+            Category: 'Glossy'
+
+        },
+        {
+            Name: 'Glossy',
+            Image: 'https://cdn.shopify.com/s/files/1/0534/7849/0267/files/WrapCart-Img-1266_Glossy_1024x1024_crop_center_7edfd854-7253-479d-99f3-4c42b751ef94.jpg?v=1628724705',
+            OriginalPrice: '450',
+            DiscountPrice: '250',
+            Seller: 'MZ Art',
+            Category: 'Glossy'
+        }
+    ],
+    "CarbonFibre": [
+        {
+            Name: 'Carbon Fibre',
+            Image: 'https://cdn.shopify.com/s/files/1/0534/7849/0267/files/WrapCart-Img-1270_Carbon_Fibre_1024x1024_crop_center_c0c74b03-e157-439f-ac5a-22103d871fcc.jpg?v=1628724759',
+            OriginalPrice: '450',
+            DiscountPrice: '250',
+            Seller: 'MZ Art',
+            Category: 'CarbonFibre'
+        },
+        {
+            Name: 'Carbon Fibre',
+            Image: 'https://cdn.shopify.com/s/files/1/0534/7849/0267/files/WrapCart-Img-1270_Carbon_Fibre_1024x1024_crop_center_c0c74b03-e157-439f-ac5a-22103d871fcc.jpg?v=1628724759',
+            OriginalPrice: '450',
+            DiscountPrice: '250',
+            Seller: 'MZ Art',
+            Category: 'CarbonFibre'
+        },
+        {
+            Name: 'Carbon Fibre',
+            Image: 'https://cdn.shopify.com/s/files/1/0534/7849/0267/files/WrapCart-Img-1270_Carbon_Fibre_1024x1024_crop_center_c0c74b03-e157-439f-ac5a-22103d871fcc.jpg?v=1628724759',
+            OriginalPrice: '450',
+            DiscountPrice: '250',
+            Seller: 'MZ Art',
+            Category: 'CarbonFibre'
+        },
+        {
+            Name: 'Carbon Fibre',
+            Image: 'https://cdn.shopify.com/s/files/1/0534/7849/0267/files/WrapCart-Img-1270_Carbon_Fibre_1024x1024_crop_center_c0c74b03-e157-439f-ac5a-22103d871fcc.jpg?v=1628724759',
+            OriginalPrice: '450',
+            DiscountPrice: '250',
+            Seller: 'MZ Art',
+            Category: 'CarbonFibre'
+        },
+    ]
+
+}

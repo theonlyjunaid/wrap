@@ -8,8 +8,8 @@ import { getItemCategories } from '../service/Data'
 function Items() {
     const Catogary = getItemCategories.map((item, index) => {
         return (
-            <div className='mb-3' key={index}>
-                <Link href={`/post/${1 + 1}`}>
+            <div className='mb-3' key={index} >
+                <Link href={`/post/${item.Name}`}>
                     <a > <img src={item.Image} alt={item.Name}
                         className='hover:-hue-rotate-60' /></a>
                 </Link>
@@ -19,9 +19,9 @@ function Items() {
     console.log(getItemCategories)
 
     return (
-        <div className=' grid grid-cols-2 gap-4 p-4 md:grid-cols-3 md:m-6'>
+        <div className=' grid grid-cols-2 gap-4 p-4 md:grid-cols-3 md:m-6' >
             {Catogary}
-        </div>
+        </div >
     )
 }
 
