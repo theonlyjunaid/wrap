@@ -9,7 +9,7 @@ function Products(props) {
     const ItemData = getItemsByCategories[Category]
 
 
-    const Items = ItemData.map((item, index) => {
+    const Items = ItemData?.map((item, index) => {
         return (
             <div className='mb-3 border-red-300 border-2' key={index}>
                 <Link href={`/post/product/${1 + 1}`}>
