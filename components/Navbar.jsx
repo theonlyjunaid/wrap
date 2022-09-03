@@ -43,25 +43,25 @@ const Navbar = () => {
                 <div className='pr-2 text-5xl md:hidden'><i className='bx bxl-whatsapp' ></i></div>
             </nav>
             <div className={` ${show}  front`}>
-                <ul className='w-[100%]  bg-white text-2xl  pl-4 pr-4 divide-y text-center '>
+                <ul className='w-[100%]  bg-white text-2xl  pl-4 pr-4 divide-y text-center cursor-pointer'>
 
-                    <li className='p-3' >
-                        <Link href="/">
+                    <Link href="/">
+                        <li className='p-3' >
                             <a><i className='bx bx-home' ></i> Home</a>
-                        </Link>
-                    </li>
+                        </li>
 
-                    <li className='p-3'>
-                        <Link href="/">
+                    </Link>
+                    <Link href="/">
+                        <li className='p-3'>
                             <a><i className='bx bx-user' ></i> About Us</a>
-                        </Link>
-                    </li>
+                        </li>
+                    </Link>
 
-                    <li className='p-3'>
-                        <Link href="/">
+                    <Link href="/">
+                        <li className='p-3'>
                             <a><i className='bx bxl-whatsapp' ></i> Contact</a>
-                        </Link>
-                    </li>
+                        </li>
+                    </Link>
                 </ul>
             </div>
         </>
