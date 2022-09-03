@@ -3,14 +3,14 @@ import Link from 'next/link'
 
 const Navbar = () => {
     const [show, setShow] = useState("hidden");
-    const [showb, setShowb] = useState("bg-gray-400");
+    const [showb, setShowb] = useState("bg-gray-200");
     const hide = () => {
         if (show === "hidden") {
             setShow("")
             setShowb("bg-white")
 
         } else {
-            setShowb("bg-gray-400")
+            setShowb("bg-gray-200")
             setShow("hidden")
         }
     }
@@ -20,7 +20,9 @@ const Navbar = () => {
                 <div className='pl-2 text-4xl md:hidden' onClick={hide}>
                     {show === "hidden" ? <i className='bx bx-menu'></i> : <i className='bx bxs-chevrons-up'></i>}
                 </div>
-                <div className='text-bold first-letter:text-blue-600 md:text-4xl md:font-bold md:p-4'>SKINwala</div>
+                <Link href="/">
+                    <a> <div className='text-bold first-letter:text-blue-600 md:text-4xl md:font-bold md:p-4'>SKINwala</div></a>
+                </Link>
                 <div className='hidden md:flex list-none	'>
                     <li className='p-3' >
                         <Link href="/">

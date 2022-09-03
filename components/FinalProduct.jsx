@@ -23,7 +23,7 @@ function FinalProduct() {
                     </ul>
                 </div>
 
-                <a href='https://www.google.com' target="_blank" >
+                <a href='https://wa.me/p/4813941492040861/918799796185' target="_blank" >
                     <div className='text-3xl w-100% bg-gray-500 hover:bg-gray-700 p-1 text-center  items-center my-4 md:font-semibold md:my-5'> Buy Now <i className='bx bxl-whatsapp px-4 text-4xl' ></i>  </div>
                 </a>
             </div>
