@@ -10,7 +10,7 @@ const Skins = ({ products }) => {
             {products.map((product) => (<Link href={"/products/" + product.slug} key={product._id} >
                 <a ><div className=" p-2  grid grid-cols-1 place-items-center shadow-sm border hover:drop-shadow-2xl bg-white transition duration-150 ease-out hover:ease-in">
                     <img
-                        alt="ecommerce"
+                      alt="ecommerce baba"
                         className="m-auto  h-[35vh] block  relative  rounded overflow-hidden"
                         src="https://v2ecommerce.vercel.app/mobile/skin/Apple/14series/14promax/plain.png"
                     />
