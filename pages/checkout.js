@@ -1,10 +1,144 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { AiOutlineShoppingCart, AiFillCloseCircle, AiOutlinePlusCircle, AiOutlineMinusCircle } from 'react-icons/ai'
 import Link from 'next/link'
+import Head from 'next/head'
+import Script from 'next/script'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const checkout = ({ cart, addToCart, removeFromCart, clearCart, subTotal, qty }) => {
+    // console.log(let item in cart)
+
+
+    const [info, setInfo] = useState({
+        name: '',
+        email: '',
+        phone: '',
+        address: '',
+        city: '',
+        state: '',
+        pincode: '',
+        disbled: true
+    })
+    const handleChange = async (e) => {
+
+        setInfo({ ...info, [e.target.name]: e.target.value })
+        if (info.name && info.email && info.phone && info.address && info.city && info.state && info.pincode) {
+            setInfo({ ...info, disbled: false })
+        }
+        if (e.target.name === 'pincode') {
+            console.log(e.target.value);
+
+            if (e.target.value.length == 6) {
+                // console.log(pincode)
+                let pins = await fetch(`/api/pincode`)
+                let pinJson = await pins.json()
+                let pincodes = await pinJson['pincodes']
+                if (Object.keys(pincodes).includes(e.target.value)) {
+                    console.log(pincodes[e.target.value][0])
+                    console.log(pincodes[e.target.value][1])
+                    setInfo({ ...info, city: pincodes[e.target.value][1], state: pincodes[e.target.value][0], pincode: e.target.value })
+                }
+
+            }
+            else {
+                setInfo({ ...info, city: '', state: '' })
+            }
+        }
+        console.log(info)
+    }
+
+
+    const makePayment = async () => {
+
+        console.log("here...");
+        const res = await initializeRazorpay();
+        let oid = Math.floor(Math.random() * Date.now());
+        if (!res) {
+            alert("Razorpay SDK Failed to load");
+            return;
+        }
+        const bodyData = { subTotal, qty, cart, oid, info };
+
+        // Make API call to the serverless API
+        const data = await fetch("/api/razorpay", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(bodyData),
+        }).then((t) =>
+            t.json()
+        );
+        console.log(data.success);
+        if (data.success) {
+            var options = {
+                key: process.env.RAZORPAY_KEY, // Enter the Key ID generated from the Dashboard
+                name: "Wrapify",
+                currency: data.currency,
+                amount: data.amount,
+                order_id: data.id,
+                description: "Thankyou for your test donation",
+                callback_url: "/api/paymentverify",
+                prefill: {
+                    name: "Junaid",
+                    email: "junaidmalik9069@gmail.com",
+                    contact: "9999999999",
+                },
+            };
+            console.log(options);
+            const paymentObject = new window.Razorpay(options);
+            paymentObject.open();
+        } else {
+            clearCart()
+            toast.error('Some values of cart has been changed Please Try Again', {
+                position: "top-left",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            });
+        }
+    };
+    const initializeRazorpay = () => {
+        return new Promise((resolve) => {
+            const script = document.createElement("script");
+            script.src = "https://checkout.razorpay.com/v1/checkout.js";
+            // document.body.appendChild(script);
+
+            script.onload = () => {
+                resolve(true);
+            };
+            script.onerror = () => {
+                resolve(false);
+            };
+
+            document.body.appendChild(script);
+        });
+    };
+
     return (
-        <div className='container m-auto'>
+        <div className='container m-auto' >
+            <Head>
+                <title>Checkout</title>
+                <meta name='description' content='Checkout Page' />
+            </Head>
+            <ToastContainer
+                position="top-left"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+            />
+
 
             <h1 className='font-bold text-3xl text-center my-8'>Checkout</h1>
             <h2>1. Delivery Details</h2>
@@ -15,6 +149,7 @@ const checkout = ({ cart, addToCart, removeFromCart, clearCart, subTotal, qty })
                             Name
                         </label>
                         <input
+                            onChange={handleChange}
                             type="text"
                             id="name"
                             name="name"
@@ -29,6 +164,7 @@ const checkout = ({ cart, addToCart, removeFromCart, clearCart, subTotal, qty })
                             Email
                         </label>
                         <input
+                            onChange={handleChange}
                             type="email"
                             id="email"
                             name="email"
@@ -44,8 +180,9 @@ const checkout = ({ cart, addToCart, removeFromCart, clearCart, subTotal, qty })
                     Address
                 </label>
                 <textarea
-                    id="message"
-                    name="message"
+                    onChange={handleChange}
+                    id="address"
+                    name="address"
                     className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 h-12 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"
                     defaultValue={""}
                 />
@@ -57,6 +194,7 @@ const checkout = ({ cart, addToCart, removeFromCart, clearCart, subTotal, qty })
                             phone
                         </label>
                         <input
+                            onChange={handleChange}
                             type="number"
                             id="phone"
                             name="phone"
@@ -71,10 +209,13 @@ const checkout = ({ cart, addToCart, removeFromCart, clearCart, subTotal, qty })
                             city
                         </label>
                         <input
+                            onChange={handleChange}
                             type="text"
                             id="city"
+                            value={info.city}
+                            readOnly
                             name="city"
-                            className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                            className="w-full bg-gray-200 cursor-not-allowed rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
                         />
                     </div>
 
@@ -88,10 +229,13 @@ const checkout = ({ cart, addToCart, removeFromCart, clearCart, subTotal, qty })
                             State
                         </label>
                         <input
+                            onChange={handleChange}
                             type="text"
+                            readOnly
                             id="state"
+                            value={info.state}
                             name="state"
-                            className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                            className="w-full bg-gray-200 cursor-not-allowed rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
                         />
                     </div>
 
@@ -102,6 +246,7 @@ const checkout = ({ cart, addToCart, removeFromCart, clearCart, subTotal, qty })
                             pincode
                         </label>
                         <input
+                            onChange={handleChange}
                             type="number"
                             id="pincode"
                             name="pincode"
@@ -128,7 +273,7 @@ const checkout = ({ cart, addToCart, removeFromCart, clearCart, subTotal, qty })
                     <span>the total amount is {subTotal}</span>
                 </ol>
                 <Link href=""><a >
-                    <div className="mx-4 px-1 py-1 w-max rounded-md my-5  bg-green-500">Pay Now</div>
+                    <button disabled={info.disbled} onClick={makePayment} className="disabled:bg-green-200 mx-4 px-1 py-1 w-max rounded-md my-5  bg-green-500">Pay Now</button>
                 </a></Link>
             </div>
         </div>

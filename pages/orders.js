@@ -1,7 +1,33 @@
-import React from 'react'
+import React,{useState,useEffect} from 'react'
+import Link from 'next/link'
 
 
 const Orders = () => {
+ //post requst to server for fething the orders
+const [orderdata, setOrderdata] = useState([])
+useEffect(() => {
+ if(typeof window !== 'undefined'){
+const token = localStorage.getItem('token')
+
+//  console.log(token)
+ fetch('/api/myorders', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({"token": token}),
+}).then((t) =>
+
+    t.json()
+).then((data) => {
+    // console.log(data.orders)
+    setOrderdata(data.orders)
+    // setOrders(data)
+})
+ }
+}, [])
+// console.log(orderdata)
+
     return (
         <div>
             <div className='container mx-auto '>
@@ -40,48 +66,24 @@ const Orders = () => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr className="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100">
+                                    {orderdata.map((item,index) => {
+                                        console.log(item.products)
+            return (   <tr key={index} className="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100">
                                             <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                                                1
+                                                {item.orderId}
                                             </td>
                                             <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                                Mark
+                                                {item.name}
                                             </td>
                                             <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                                Otto
+                                                {item.amount}
                                             </td>
                                             <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                                @mdo
+                                                {/* {item.quantity} */}
+                                                <Link href={`/order?id=${item._id}`}><a>Details</a></Link>
                                             </td>
                                         </tr>
-                                        <tr className="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100">
-                                            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                                                2
-                                            </td>
-                                            <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                                Jacob
-                                            </td>
-                                            <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                                Thornton
-                                            </td>
-                                            <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                                @fat
-                                            </td>
-                                        </tr>
-                                        <tr className="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100">
-                                            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                                                3
-                                            </td>
-                                            <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                                Larry
-                                            </td>
-                                            <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                                Wild
-                                            </td>
-                                            <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                                @twitter
-                                            </td>
-                                        </tr>
+            )})}
                                     </tbody>
                                 </table>
                             </div>

@@ -49,7 +49,6 @@ export default function Example() {
                 theme: "light",
             });
             setTimeout(() => {
-
                 router.push('/')
             }, 1500);
         } else {
