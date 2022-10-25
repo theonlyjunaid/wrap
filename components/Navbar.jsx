@@ -4,6 +4,7 @@ import { FaUserCircle } from 'react-icons/fa'
 import Link from 'next/link'
 
 const Navbar = ({ logout, user, cart, addToCart, removeFromCart, clearCart, subTotal, qty }) => {
+
     const toggleCart = () => {
         if (ref.current.classList.contains('translate-x-full')) {
             ref.current.classList.remove('translate-x-full')
@@ -64,8 +65,8 @@ const Navbar = ({ logout, user, cart, addToCart, removeFromCart, clearCart, subT
                     })}
                 </ol>
                 <div className='flex gap-5 text-lg'>
-                    <Link href="/checkout"><a >    <button className="text-white bg-indigo-500 border-0 py-1 px-2 focus:outline-none hover:bg-indigo-600 rounded text-md">Checkout</button></a></Link>
-                    <button className="text-white bg-indigo-500 border-0 py-1 px-2 focus:outline-none hover:bg-indigo-300 rounded text-md" onClick={clearCart}>Clear Cart</button>
+                    <Link href="/checkout"><a >    <button disabled={Object.keys(cart).length ==0} className="disabled:bg-indigo-400 disabled:cursor-not-allowed text-white bg-indigo-500 border-0 py-1 px-2 focus:outline-none hover:bg-indigo-600 rounded text-md">Checkout</button></a></Link>
+                    <button disabled={Object.keys(cart).length ==0}  className="disabled:bg-indigo-400 disabled:cursor-not-allowed text-white bg-indigo-500 border-0 py-1 px-2 focus:outline-none hover:bg-indigo-300 rounded text-md" onClick={clearCart}>Clear Cart</button>
                 </div>
             </div>
         </div >

@@ -1,6 +1,7 @@
 import Product from "../../model/Product";
 import connectDB from "../../middleware/mongoose";
 
+
 const handler = async (req, res) => {
     if (req.method === 'POST') {
         console.log(req.body);
@@ -14,5 +15,4 @@ const handler = async (req, res) => {
         res.status(400).json({ message: 'This method is not allowed' });
     }
 }
-
 export default connectDB(handler);

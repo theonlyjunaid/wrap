@@ -33,11 +33,14 @@ export default function Example() {
             body: JSON.stringify(data)
         })
         const json = await res.json()
-        console.log(json)
+
+
+        console.log(json.email)
+        console.log(json.token)
         setEmail("")
         setPassword("")
         if (json.success) {
-            localStorage.setItem('token', json.token);
+            localStorage.setItem('myuser', JSON.stringify({ email: json.email, token: json.token }));
             toast.success('Login Success', {
                 position: "top-left",
                 autoClose: 5000,

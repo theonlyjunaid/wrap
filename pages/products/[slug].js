@@ -25,8 +25,7 @@ const Post = ({ cart, addToCart, removeFromCart, clearCart, subTotal, buyNow }) 
 
         let pins = await fetch(`/api/pincode`)
         let pinJson = await pins.json()
-        let pincodes = await pinJson['pincodes']
-        if (Object.keys(pincodes).includes(pin)) {
+        if (Object.keys(pinJson).includes(pin)) {
             setService(true)
             toast.success('Your pincode is servicable', {
                 position: "top-right",
@@ -232,10 +231,10 @@ const Post = ({ cart, addToCart, removeFromCart, clearCart, subTotal, buyNow }) 
                             <span className="title-font font-medium text-2xl text-gray-900">
                                 $58.00
                             </span>
-                            <button onClick={() => { addToCart('iphone-14-green', 1,499 , 'Iphone -11 - Green', 'Normal', 'Green'); console.log(cart) }} className="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">
+                            <button onClick={() => { addToCart('iphone-14-green', 1, 499, 'Iphone -11 - Green', 'Normal', 'Green'); console.log(cart) }} className="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">
                                 Add to cart
                             </button>
-                            <button onClick={() => { buyNow('iphone-14-green', 1,499 , 'Iphone -11 - Green', 'Normal', 'Green') }} className="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">
+                            <button onClick={() => { buyNow('iphone-14-green', 1, 499, 'Iphone -11 - Green', 'Normal', 'Green') }} className="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">
                                 Buy Now                            </button>
                             <button className="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4">
                                 <svg

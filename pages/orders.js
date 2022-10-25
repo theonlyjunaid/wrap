@@ -1,32 +1,33 @@
-import React,{useState,useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 
 
 const Orders = () => {
- //post requst to server for fething the orders
-const [orderdata, setOrderdata] = useState([])
-useEffect(() => {
- if(typeof window !== 'undefined'){
-const token = localStorage.getItem('token')
+    //post requst to server for fething the orders
+    const [orderdata, setOrderdata] = useState([])
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            const user = JSON.parse(localStorage.getItem('myuser'))
 
-//  console.log(token)
- fetch('/api/myorders', {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({"token": token}),
-}).then((t) =>
 
-    t.json()
-).then((data) => {
-    // console.log(data.orders)
-    setOrderdata(data.orders)
-    // setOrders(data)
-})
- }
-}, [])
-// console.log(orderdata)
+            //  console.log(token)
+            fetch('/api/myorders', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ "token": user?.token }),
+            }).then((t) =>
+
+                t.json()
+            ).then((data) => {
+                // console.log(data.orders)
+                setOrderdata(data.orders)
+                // setOrders(data)
+            })
+        }
+    }, [])
+    // console.log(orderdata)
 
     return (
         <div>
@@ -66,24 +67,24 @@ const token = localStorage.getItem('token')
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    {orderdata.map((item,index) => {
-                                        console.log(item.products)
-            return (   <tr key={index} className="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100">
-                                            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                                                {item.orderId}
-                                            </td>
-                                            <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                                {item.name}
-                                            </td>
-                                            <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                                {item.amount}
-                                            </td>
-                                            <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                                {/* {item.quantity} */}
-                                                <Link href={`/order?id=${item._id}`}><a>Details</a></Link>
-                                            </td>
-                                        </tr>
-            )})}
+                                        {orderdata.map((item, index) => {
+                                            return (<tr key={index} className="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100">
+                                                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                                                    {item.orderId}
+                                                </td>
+                                                <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                                    {item.name}
+                                                </td>
+                                                <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                                    {item.amount}
+                                                </td>
+                                                <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                                    {/* {item.quantity} */}
+                                                    <Link href={`/order?id=${item._id}`}><a>Details</a></Link>
+                                                </td>
+                                            </tr>
+                                            )
+                                        })}
                                     </tbody>
                                 </table>
                             </div>

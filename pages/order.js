@@ -1,11 +1,19 @@
 import mongoose from 'mongoose'
 import React from 'react'
 import Order from '../model/Order'
-import useRouter from 'next/router'
+import { useRouter } from 'next/router'
 
-const order = ({order}) => {
-    console.log(order.products['iphone-12-green']);
-   // print the order details
+const order = ({ order, clearCart }) => {
+
+    // print the order details
+    const router = useRouter()
+    // console.log(router.query.clearCart)
+    if (router.query.clearCart == 1) {
+        if (typeof window !== 'undefined') {
+            localStorage.removeItem('cart')
+        }
+    }
+
 
 
     return (
@@ -14,13 +22,13 @@ const order = ({order}) => {
                 <div className="lg:w-4/5 mx-auto flex flex-wrap">
                     <div className="lg:w-1/2 w-full lg:pr-10 lg:py-6 mb-6 lg:mb-0">
                         <h2 className="text-sm title-font text-gray-500 tracking-widest">
-Wrapify
+                            Wrapify
                         </h2>
                         <h1 className="text-gray-900 text-3xl title-font font-medium mb-4">
-                           Order id : {order.orderId}
+                            Order id : {order.orderId}
                         </h1>
                         <h2 className="text-sm title-font text-gray-500 tracking-widest">
-Order has been successfully placed your payment is {order.status}
+                            Order has been successfully placed your payment is {order.status}
                         </h2>
                         <div className="flex mb-4">
                             <a className="flex-grow border-b-2 border-gray-300 py-2 text-lg px-1">
@@ -33,21 +41,21 @@ Order has been successfully placed your payment is {order.status}
                                 Price
                             </a>
                         </div>
-                      { Object.keys(order.products).map((item)=>{
-                        return(
-                            <div key={item} className='flex border-b border-gray-200 py-2'>
-                            <span className="text-gray-500">{order.products[item].name}</span>
-                            <span className="ml-auto text-gray-900">{order.products[item].qty}</span>
-                            <span className="ml-auto text-gray-900">{order.products[item].price}</span>
-                        </div>
-                        )
+                        {Object.keys(order.products).map((item) => {
+                            return (
+                                <div key={item} className='flex border-b border-gray-200 py-2'>
+                                    <span className="text-gray-500">{order.products[item].name}</span>
+                                    <span className="ml-auto text-gray-900">{order.products[item].qty}</span>
+                                    <span className="ml-auto text-gray-900">{order.products[item].price}</span>
+                                </div>
+                            )
 
-                      }) }
-                     
+                        })}
+
 
                         <div className="flex my-2 py-2">
                             <span className="title-font font-medium text-2xl text-gray-900">
-rs {order.amount}
+                                rs {order.amount}
                             </span>
                             <button className="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">
                                 Track Order
@@ -93,10 +101,12 @@ export default order
 // }
 // export { getServerSideProps };
 export async function getServerSideProps(context) {
-    if(!mongoose.connections[0].readyState){
+    if (!mongoose.connections[0].readyState) {
         await mongoose.connect(process.env.MONGO_URI)
     }
-   
+
+
+
     const order = await Order.findById(context.query.id);
     return {
         props: {

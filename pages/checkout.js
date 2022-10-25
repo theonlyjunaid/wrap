@@ -6,8 +6,9 @@ import Script from 'next/script'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const checkout = ({ cart, addToCart, removeFromCart, clearCart, subTotal, qty }) => {
+const checkout = ({ cart, addToCart, removeFromCart, clearCart, subTotal, qty, user }) => {
     // console.log(let item in cart)
+
 
 
     const [info, setInfo] = useState({
@@ -20,12 +21,40 @@ const checkout = ({ cart, addToCart, removeFromCart, clearCart, subTotal, qty })
         pincode: '',
         disbled: true
     })
+    useEffect(() => {
+
+        if (typeof window !== 'undefined') {
+            if (localStorage.getItem('myuser')) {
+                const user = JSON.parse(localStorage.getItem('myuser'))
+                setInfo({
+                    ...info,
+                    email: user.email,
+                })
+            }
+        }
+    }, [])
     const handleChange = async (e) => {
 
         setInfo({ ...info, [e.target.name]: e.target.value })
-        if (info.name && info.email && info.phone && info.address && info.city && info.state && info.pincode) {
+        if (info.name && info.email && info.phone && info.address && info.pincode) {
             setInfo({ ...info, disbled: false })
         }
+        if (e.target.name === "phone") {
+            if (e.target.value.length !== 10) {
+                setInfo({ ...info, disbled: true })
+                toast.error('enetr 10 digit number', {
+                    position: "top-left",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                });
+            }
+        }
+
         if (e.target.name === 'pincode') {
             console.log(e.target.value);
 
@@ -33,11 +62,11 @@ const checkout = ({ cart, addToCart, removeFromCart, clearCart, subTotal, qty })
                 // console.log(pincode)
                 let pins = await fetch(`/api/pincode`)
                 let pinJson = await pins.json()
-                let pincodes = await pinJson['pincodes']
-                if (Object.keys(pincodes).includes(e.target.value)) {
-                    console.log(pincodes[e.target.value][0])
-                    console.log(pincodes[e.target.value][1])
-                    setInfo({ ...info, city: pincodes[e.target.value][1], state: pincodes[e.target.value][0], pincode: e.target.value })
+                console.log(pinJson)
+                if (Object.keys(pinJson).includes(e.target.value)) {
+                    console.log(pinJson[e.target.value][0])
+                    console.log(pinJson[e.target.value][1])
+                    setInfo({ ...info, city: pinJson[e.target.value][1], state: pinJson[e.target.value][0], pincode: e.target.value })
                 }
 
             }
@@ -70,7 +99,7 @@ const checkout = ({ cart, addToCart, removeFromCart, clearCart, subTotal, qty })
         }).then((t) =>
             t.json()
         );
-        console.log(data.success);
+        // console.log(data.success);
         if (data.success) {
             var options = {
                 key: process.env.RAZORPAY_KEY, // Enter the Key ID generated from the Dashboard
@@ -81,17 +110,19 @@ const checkout = ({ cart, addToCart, removeFromCart, clearCart, subTotal, qty })
                 description: "Thankyou for your test donation",
                 callback_url: "/api/paymentverify",
                 prefill: {
-                    name: "Junaid",
-                    email: "junaidmalik9069@gmail.com",
-                    contact: "9999999999",
+                    name: info.name,
+                    email: info.email,
+                    contact: 91 + info.phone,
                 },
             };
             console.log(options);
             const paymentObject = new window.Razorpay(options);
             paymentObject.open();
         } else {
-            clearCart()
-            toast.error('Some values of cart has been changed Please Try Again', {
+            if (data.cartClear) {
+                clearCart()
+            }
+            toast.error(data.message, {
                 position: "top-left",
                 autoClose: 5000,
                 hideProgressBar: false,
@@ -121,7 +152,7 @@ const checkout = ({ cart, addToCart, removeFromCart, clearCart, subTotal, qty })
     };
 
     return (
-        <div className='container m-auto' >
+        <form className='container m-auto' >
             <Head>
                 <title>Checkout</title>
                 <meta name='description' content='Checkout Page' />
@@ -158,7 +189,22 @@ const checkout = ({ cart, addToCart, removeFromCart, clearCart, subTotal, qty })
                     </div>
 
                 </div>
-                <div className="px-2 w-1/2">
+                {user?.email ? <div className="px-2 w-1/2">
+                    <div className=" mb-4">
+                        <label htmlFor="email" className="leading-7 text-sm text-gray-600">
+                            Email
+                        </label>
+                        <input
+                            readOnly
+                            value={user.email}
+                            type="email"
+                            id="email"
+                            name="email"
+                            className="w-full bg-gray-200 rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                        />
+                    </div>
+
+                </div> : <div className="px-2 w-1/2">
                     <div className=" mb-4">
                         <label htmlFor="email" className="leading-7 text-sm text-gray-600">
                             Email
@@ -172,7 +218,8 @@ const checkout = ({ cart, addToCart, removeFromCart, clearCart, subTotal, qty })
                         />
                     </div>
 
-                </div>
+                </div>}
+
             </div>
 
             <div className="relative mb-4">
@@ -276,7 +323,7 @@ const checkout = ({ cart, addToCart, removeFromCart, clearCart, subTotal, qty })
                     <button disabled={info.disbled} onClick={makePayment} className="disabled:bg-green-200 mx-4 px-1 py-1 w-max rounded-md my-5  bg-green-500">Pay Now</button>
                 </a></Link>
             </div>
-        </div>
+        </form>
     )
 }
 

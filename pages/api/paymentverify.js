@@ -1,17 +1,18 @@
- import mongoose from "mongoose";
- import Order from "../../model/Order";
-    import connectDB from "../../middleware/mongoose";
-    import CryptoJS from "crypto-js";
+import mongoose from "mongoose";
+import Order from "../../model/Order";
+import connectDB from "../../middleware/mongoose";
 
 
-    const handler = async (req, res) => {
-    
+const handler = async (req, res) => {
 
- await Order.findOneAndUpdate({'paymentInfo.id': req.body.razorpay_order_id},{status: 'paid', paymentInfo: req.body});
- let order = await Order.findOne({paymentInfo: req.body});
-    // res.status(200).json(order._id);
-    res.redirect('/order?id='+order._id);
-        
+    let order;
+    order = await Order.findOneAndUpdate({ 'paymentInfo.id': req.body.razorpay_order_id }, { status: 'paid', paymentInfo: req.body });
+    let products = order.products;
+    for (let slug in products) {
+        await mongoose.connection.db.collection('products').updateOne({ slug: slug }, { $inc: { availableQty: -products[slug].qty } });
     }
+    res.redirect('/order?id=' + order._id + '&clearCart=1');
 
-    export default connectDB(handler);
+}
+
+export default connectDB(handler);
