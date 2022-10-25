@@ -5,13 +5,13 @@ import ItemComponent from './ItemComponent'
 // import { ItemContext } from '../../context/Itemcontext'
 // import Link from 'next/link'
 function Theme(props) {
-    console.log(props.mobile[props.model].name + " " + props.mobile[props.model].model[props.design.split("-").join(" ")].name)
-    // const ShownItem = useContext(ItemContext)
-    // const [baba, setBaba] = useState('hidden');
-    const [skine, setSkine] = useState(props.mobile[props.model]?.model[props.design.split("-").join(" ")]?.skin[props.itemview]);
-    useEffect(() => {
-        setSkine(props.mobile[props.model]?.model[props.design.split("-").join(" ")]?.skin[props.itemview])
-    }, [props.query]);
+    // console.log(props.mobile[props.model].name + " " + props.mobile[props.model].model[props.design.split("-").join(" ")].name)
+    // // const ShownItem = useContext(ItemContext)
+    // // const [baba, setBaba] = useState('hidden');
+    // const [skine, setSkine] = useState(props.mobile[props.model]?.model[props.design.split("-").join(" ")]?.skin[props.itemview]);
+    // useEffect(() => {
+    //     setSkine(props.mobile[props.model]?.model[props.design.split("-").join(" ")]?.skin[props.itemview])
+    // }, [props.query]);
     // const [task, setTask] = useState({
     //     'image': skine, 'phone': skine?.split("/").splice(0, 6), 'skin': props.query, 'model': props.model, 'design': props.design, 'price': props.mobile[props.model]?.model[props.design.split("-").join(" ")]?.price
     // });
@@ -36,7 +36,7 @@ function Theme(props) {
     return (
         <div className=' md:flex p-4'>
             <ItemComponent
-                skin={skine} />
+                skin={props.product.img} />
             <div>
                 {/* <div>
                     {

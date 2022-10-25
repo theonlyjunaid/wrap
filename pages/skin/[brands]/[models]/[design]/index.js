@@ -288,26 +288,48 @@
 // }
 
 // export default Post
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+import Product from '../../../../../model/Product';
+import mongoose from 'mongoose';
+import Link from 'next/link'
 import { useRouter } from 'next/router'
-import Theme from '../../../../../components/Item/Theme'
+import ItemComponent from '../../../../../components/Item/ItemComponent';
 
-export default function Slug({ mobile }) {
-    const { query } = useRouter()
 
-    console.log(query)
+export default function Slug({ product, addToCart }) {
+    // console.log({ products })
     return (
         <div>
-            <Theme mobile={mobile} model={query.brands} design={query.models} itemview={query.design} query={query} />
+
+            <div>
+
+                <ItemComponent
+                    skin={product.img} />
+
+            </div>
+
+            <button onClick={() => { addToCart(product.slug, 1, product.price, product.name + " " + product.color, product.size, product.color) }} className="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">
+                Add to cart
+            </button>
+
         </div>
     )
 }
 export async function getServerSideProps(context) {
-    const res = await fetch('http://localhost:3000/api/mobile')
-    const mobile = await res.json()
+    if (!mongoose.connections[0].readyState) {
+        await mongoose.connect(process.env.MONGODB_URI);
+
+    }
+    let model = context.query.models.split('-').join(' ')
+    let brand = context.query.brands
+    let design = context.query.design
+    let product = await Product.findOne({ name: model, brand: brand, color: design }).lean();
+
     return {
-        props: {
-            mobile
-        }
+        props: { product: JSON.parse(JSON.stringify(product)) },
     }
 }
+
+
+
+

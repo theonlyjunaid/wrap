@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
+import Link from 'next/link'
 // import { theme } from '../../data/theme'
 // import Theme from '../../../../../../components/Item/Theme'
 
-export default function Slug({ mobile }) {
+export default function Slug({ mobile, cart, addToCart, removeFromCart, clearCart, subTotal, buyNow }) {
     const theme = {
         'PLain Colours': [{
             name: 'Green',
@@ -14,6 +15,7 @@ export default function Slug({ mobile }) {
             URL: 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxISEhUSDxIVFRUVFRUVFRUVFRUVFRUVFRcXFxUVFRUYHSggGB0lHRUVITEhJSkrLi4uFx8zODMtNygtLisBCgoKDQ0NDg0NDisZFRkrKy0tKy0rKzc3LS0tKzctLTctKy0rLTctLTctLTc3Ny03Ny0tLSstLTctLSstKys3Lf/AABEIAOEA4QMBIgACEQEDEQH/xAAYAAEBAQEBAAAAAAAAAAAAAAAAAQIDB//EABgQAQEBAQEAAAAAAAAAAAAAAAABEQJB/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAH/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwD0+mqiKpKEEKkWmAkBcAoAoCiCKgKigIEASgAWhQVBUEIqKCJ01WaCYGAOiKgoqRRFRUFAWCIRcQFUSAAAWpVMBCFICCpAAAEVICgoIzW2egZ0AHSpjSAAQAKAogAoARUAVNWsgoSlBLQUEDVBEVKAGgAQBWeliUGRcAbpVqUEUUEABQgAJVAFQFQKCAAAAAAgAItEBdIRQQWpQZwAHRAAWoAUgQBQAIQBQAEtAECoDSEUBKtQEgACLqAsWJABOqtZoAAN0EBYRFAFQBTABUABUAqKkARUAxpItBNRYAYlCggKBqxnFBWbGkBEQB0qVamAsNDAILgACwEAAhRQZo1jIBixMAihQGVTAAoCAAKkWArNrVYoAgDoCCqqKAigioKCCgAIBUDQNLQ0FQ0gAAIAAQAIrMUCs1pKDIaA6VFoArKgACrFSAgtqAAJQRQBFoABDQEwoAi6gL1UACCyIC6z1VrPVBAUV1qLUESgAoAKIAoQgCKgBSJQVABUUBDSoAqAKhQFtQAGK1UoJougOvTK1AVIAKIAsIEACgKhCgkABRADQABUAQAEFoEMF0GUqs0EUAdUqpQA0ABRRLQEUQBSoAAAAAiiAKgAACKlUBDTQKy1WaAMqDshUqKLEFFKICiRQCAIqVUACJQUQAoABRQRFATBUBFRQRlaAyoIOqU1BVIzaoKIAsWIqogAqwTTQVFKCACCACiKCaUqUF00xAC0qaAlKgINCK2IAAALEAaiACNRBQABaUAKgIACoU8AU9UASoAiJQAqAKAIj//Z'
         }]
     }
+
     const { query } = useRouter()
     const { brands, models } = query
     // console.log(mobile[brands].name + " " + mobile[brands].brands[models.split("-").join(" ")].name)
@@ -23,7 +25,7 @@ export default function Slug({ mobile }) {
     useEffect(() => {
         setSkine(mobile[brands].model[models.split("-").join(" ")]?.skin['plain'])
     }, [query]);
-
+    console.log(brands + " " + models + " " + skine.split("/").pop().split(".")[0])
     // console.log(mobile[brands].model[models.split("-").join(" ")].skin['plain'])
     return (
         <div>
@@ -33,7 +35,7 @@ export default function Slug({ mobile }) {
                     <img src={skine} alt="" className='w-[250px] md:w-[400px]' />
                 </div>
                 <div>
-                    <div>
+                    {/* <div>
                         {
                             Object.keys(mobile).map((mobi, index) => {
                                 return (
@@ -63,7 +65,7 @@ export default function Slug({ mobile }) {
                             }
                             )
                         }
-                    </div>
+                    </div> */}
                     <div className='border border-black max-h-[300px] overflow-y-scroll'>
                         <h1 className='text-3xl  font-semibold mx-2'>Customize Skin</h1>
                         <div className=''>
@@ -90,14 +92,14 @@ export default function Slug({ mobile }) {
                             }
                         </div>
                     </div>
-                    <div className='mt-1  gap-5'>
-                        <div>
-                            <Link href="/cart"><a >   <h1 className='px-3 py-1 bg-gray-300 cursor-pointer text-center' onClick={() => {
-                                // addTask();
-                            }}>Add to Bag</h1>
-                            </a></Link>
-                        </div>
-                    </div>
+                    {skine.split("/").pop().split(".")[0] != 'plain' && <div className='mt-8 grid grid-cols-2 gap-5'>
+                        <button onClick={() => { addToCart(brands + " " + models + " " + skine.split("/").pop().split(".")[0], 1, 9, models + " " + skine.split("/").pop().split(".")[0], 'Normal', 'Green'); console.log(cart) }} className="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 w-full text-center justify-center focus:outline-none hover:bg-indigo-600 rounded">
+                            Add to cart
+                        </button>
+                        <button onClick={() => { buyNow(brands + " " + models + " " + skine.split("/").pop().split(".")[0], 1, 9, models + " " + skine.split("/").pop().split(".")[0], 'Normal', 'Green') }} className="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none w-full text-center justify-center hover:bg-indigo-600 rounded">
+                            Buy Now
+                        </button>
+                    </div>}
                 </div>
             </div >
         </div>
