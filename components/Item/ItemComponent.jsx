@@ -8,8 +8,8 @@ export default function ItemComponent(props) {
 
     return (
         <>
-            <div className='w-full md:w-[500px]  flex justify-center'>
-                <img src={props.skin} alt="" className='w-[250px] md:w-[400px]' />
+            <div className='w-full  md:w-[500px]  flex justify-center items-center p-10'>
+                <img src={props.skin} alt="" className='w-[250px] md:w-auto' />
             </div>
             {/* <div>
                 <img src={props.phone} alt="Cinque Terre" className='w-[420px] ' />

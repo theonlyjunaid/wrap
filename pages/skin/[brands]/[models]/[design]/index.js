@@ -296,21 +296,116 @@ import { useRouter } from 'next/router'
 import ItemComponent from '../../../../../components/Item/ItemComponent';
 
 
-export default function Slug({ product, addToCart }) {
-    // console.log({ products })
-    return (
-        <div>
+export default function Slug({ product, addToCart, buyNow }) {
+    const destination = "/skin/" + product.brand + "/" + product.name.split(" ").join("-").toLowerCase() + "/customize";
+    const destinationback = "/skin/" + product.brand + "/" + product.name.split(" ").join("-").toLowerCase();
+    const [size, setSize] = useState('Choose')
 
-            <div>
+    return (
+        <div className='md:flex items-stretch w-full outline-none min-h-[93vh]'>
+            {/* flex flex-col justify-center items-center */}
+            <div className='w-full md:w-1/2 overflow-y-auto flex justify-self-stretch h-[70vh] md:h-screen md:max-h-[200vh] my-0 mx-auto bg-white'>
+                <div className='w-[100%]  md:h-screen  flex justify-center items-center'>
+                    <div className="w-[85%] h-[80%]">
+                        <div className='w-[100%] h-[100%] relative flex justify-center items-center '>
+                            <img src={product.img} alt="" className='w-auto max-h-[100%] max-w-[100%] object-center' />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {/* <div className=" ">
 
                 <ItemComponent
                     skin={product.img} />
+            </div> */}
+            <div className='w-full md:w-1/2 pt-6 md:pt-0  md:mt-6 lg:mt-0 text-center  md:text-left  place-content-center md:px-20   grid bg-gray-100'>
+                {/* <h2 className="text-sm title-font text-gray-500 tracking-widest">
+                    {product.category}
+                </h2> */}
+                {size === 'Choose' && <div><Link href={destinationback}><a ><div className='p-auto  mb-5 hidden md:flex font-extralight'><svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width={24}
+                    height={24}
+                    viewBox="0 0 24 24"
+                    style={{ fill: "rgba(30, 30, 80, 1)", transform: "", msfilter: "", marginRight: '10px' }}
+                >
+                    <path d="M12.707 17.293 8.414 13H18v-2H8.414l4.293-4.293-1.414-1.414L4.586 12l6.707 6.707z" />
+                </svg>
+                    Back to All Skins</div></a></Link>
+                    <h1 className="text-sm md:text-2xl title-font text-gray-500 tracking-widest">
+                        {product.name}
+                    </h1>
+                    <h2 className='text-lg  font-serif  md:text-6xl font-bold tracking-widest mb-4 overflow-y-hidden  mt-2' >{product.color.toUpperCase()}</h2>
+                    <p className='font-mono mx-20 md:mx-0 py-3 md:text-2xl  text-[#667085]  ' >{product.desc}</p>
+                    <p className=' hidden md:flex w-full text-2xl text-[#667085] font font-ser font-sans font-extralight my-5 hidden md:flex'>Whether it's the result of climate change or a nuclear winter, all-year snowfall is just around the corner. When that day comes, you'll need Arctic Camo if you want to continue hiding from your responsibilities.
+                    </p>
+                    <div className="md:flex  justify-center items-center md:justify-between my-5 md:mt-10">
+                        <div className=''> <span className='text-lg md:text-xl font-mono line-through mx-1'>₹{200 + product.price}</span><span className='text-2xl md:text-3xl font-semibold py-2'> ₹{product.price}</span>
+                        </div>
+                        <div className='my-6 md:my-0 md:w-[70%] flex justify-around px-5 items-center'>
+                            <button className='px-8  text-lg font-extralight py-2 bg-white hover:bg-slate-200 border-slate-300 border rounded-3xl' onClick={() => setSize('Choosing')}>Buy Now</button>
+                            <Link href={destination}><a><button className='px-8 text-lg font-extralight py-2 hover:bg-[#f49f1c] bg-[#ffa825] rounded-3xl'>ll Customize</button></a></Link>
+                        </div>
+                    </div>
+                </div>}
+                {
+                    size !== 'Choose' && <div className='pb-10 text-left'>
+                        <div className='p-auto mb-5 flex font-extralight  cursor-pointer ' onClick={() => setSize('Choose')} ><svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width={24}
+                            height={24}
+                            viewBox="0 0 24 24"
+                            style={{ fill: "rgba(30, 30, 80, 1)", transform: "", msfilter: "", marginRight: '10px' }}
+                        >
+                            <path d="M12.707 17.293 8.414 13H18v-2H8.414l4.293-4.293-1.414-1.414L4.586 12l6.707 6.707z" />
+                        </svg>
+                            Back</div>
+                        <h1 className="text-xl md:text-2xl font-mono font-semibold tracking-widest">
+                            Customize Your Size
+                        </h1>
 
+                        <div className='w-full border border-black rounded-md my-5'>
+                            <div className={`h-[100px] md:h-[120px] flex  border-b border-b-black gap-3 cursor-pointer ${size === 'backfit' ? 'bg-[#ffa825]' : ""}`} onClick={()=>setSize('backfit')}>
+                                <img src="/icons/backfit.webp" alt="" className='h-full' />
+                                <div className='py-1'>
+                                    <h1 className='text-md md:text-lg font-semibold'>Back Fit</h1>
+                                    <p className='text-sm md:text-md font-extralight'>- Cover Your Back panel</p>
+                                    <p className='text-sm md:text-md font-extralight'>- Very Easy to apply</p>
+                                </div>
+                            </div>
+                            <div className={`h-[100px] md:h-[120px] flex  gap-3 cursor-pointer ${size === 'fullcover' ? 'bg-[#ffa825]' : ""}`} onClick={()=>setSize('fullcover')}>
+                                <img src="/icons/fullcover.webp" alt="" className='h-full' />
+                                <div className='  py-auto'>
+                                    <h1 className='text-md md:text-lg font-semibold'>Full Coverage</h1>
+                                    <p className='text-sm md:text-md font-extralight'>- Cover Your Back panel</p>
+                                    <p className='text-sm md:text-md font-extralight'>- Cover Your Side Panel</p>
+                                    <p className='text-sm md:text-md font-extralight'>- Hard to apply</p>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                        <div className='w-full flex justify-around px-5 items-center'>
+                            {/* <button className='px-8 text-lg font-extralight py-2 bg-white hover:bg-slate-200 border-slate-300 border rounded-3xl' onClick={() => setSize('Choosing')}>Buy Now</button> */}
+                           <button className='px-8 text-3xl font-semibold py-2 hover:bg-[#f49f1c] bg-[#ffa825] rounded-3xl' onClick={() => { addToCart(product.slug, 1, product.price, product.name + " " + product.color, size, product.color) }}>Add to Cart</button>
+                        </div>
+
+
+
+                    </div>
+                }
+
+                {/* <div className='grid grid-cols-2 gap-5  place-content-center  md:left-0  px-4 md:px-0 pb-10'>
+                    <div onClick={() => { addToCart(product.slug, 1, product.price, product.name + " " + product.color, product.size, product.color) }} className="flex justify-center text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded cursor-pointer">
+                        Add to cart
+                    </div>
+                    <div onClick={() => { buyNow(product.slug, 1, product.price, product.name + " " + product.color, product.size, product.color) }} className="flex justify-center text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded cursor-pointer">
+                        Buy Now
+                    </div>
+                </div> */}
             </div>
-
-            <button onClick={() => { addToCart(product.slug, 1, product.price, product.name + " " + product.color, product.size, product.color) }} className="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">
-                Add to cart
-            </button>
 
         </div>
     )
