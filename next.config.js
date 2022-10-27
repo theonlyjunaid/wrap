@@ -1,6 +1,9 @@
 /** @type {import('next').NextConfig} */
 module.exports = {
   reactStrictMode: true,
+  images: {
+    domains: ['res.cloudinary.com', 'v2ecommerce.vercel.app','raw.githubusercontent.com'],
+  },
   env: {
     SECRET_KEY: 'process.env.SECRET_KEY',
     PAYTM_HOST: 'https://securegw-stage.paytm.in',

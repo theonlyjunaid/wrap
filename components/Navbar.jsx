@@ -45,7 +45,8 @@ const Navbar = ({ logout, user, cart, addToCart, removeFromCart, clearCart, subT
                 </div>}
                     {user.value && <FaUserCircle className='mx-3 cursor-pointer' onMouseOver={() => setDropdown(true)} onMouseLeave={() => setDropdown(false)} />}</span>
                 {!user.value && <Link href='/login'><a className='mx-3 text-xl'>Login</a></Link>}
-                <AiOutlineShoppingCart onClick={toggleCart} />
+               <Link href="/cart"><a><AiOutlineShoppingCart /></a></Link> 
+                {/* <AiOutlineShoppingCart onClick={toggleCart} /> */}
             </div >
 
 
@@ -55,7 +56,8 @@ const Navbar = ({ logout, user, cart, addToCart, removeFromCart, clearCart, subT
                 <ol className='list-decimal text-semibold text-black'>
                     {Object.keys(cart).length === 0 && <li className='my-4 font-normal'>Cart is empty</li>}
                     {Object.keys(cart).map((k) => {
-                        const { name, price, qty, size, varient } = cart[k]
+                        const { name, price, qty, size, varient ,img} = cart[k]
+                        // console.log(cart[k])
                         return (
                             <li className='flex my-2 text-lg' key={k}>
                                 <div className='w-2/3 '>{name} </div>

@@ -9,6 +9,7 @@ import LoadingBar from 'react-top-loading-bar'
 
 
 function MyApp({ Component, pageProps }) {
+    const [size, setSize] = useState('Choose')
   const [progress, setProgress] = useState(0)
   const [user, setUser] = useState({ value: null })
   const [key, setKey] = useState(0)
@@ -51,14 +52,14 @@ function MyApp({ Component, pageProps }) {
     setSubTotal(subt)
     // console.log(cart)
   }
-  const addToCart = (itemCode, qty, price, name, size, varient) => {
+  const addToCart = (itemCode, qty, price, name, size, varient,img) => {
     let newCart = cart
     if (itemCode in cart) {
       newCart[itemCode].qty = cart[itemCode].qty + qty
     } else {
-      newCart[itemCode] = { qty: 1, price, name, size, varient }
+      newCart[itemCode] = { qty: 1, price, name, size, varient ,img}
     }
-
+console.log(itemCode)
     setCart(newCart)
     saveCart(newCart)
     // console.log(cart)
@@ -103,7 +104,7 @@ function MyApp({ Component, pageProps }) {
       onLoaderFinished={() => setProgress(0)}
     />
     <Navbar logout={logout} user={user} key={key} cart={cart} addToCart={addToCart} removeFromCart={removeFromCart} clearCart={clearCart} subTotal={subTotal} />
-    <Component user={user} cart={cart} addToCart={addToCart} removeFromCart={removeFromCart} clearCart={clearCart} subTotal={subTotal}  {...pageProps} buyNow={buyNow} />
+    <Component user={user} cart={cart} addToCart={addToCart} removeFromCart={removeFromCart} clearCart={clearCart} subTotal={subTotal}  {...pageProps} buyNow={buyNow} size={size} setSize={setSize} />
     <Footer />
   </div>
 

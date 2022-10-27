@@ -296,10 +296,9 @@ import { useRouter } from 'next/router'
 import ItemComponent from '../../../../../components/Item/ItemComponent';
 
 
-export default function Slug({ product, addToCart, buyNow }) {
+export default function Slug({ product, addToCart, buyNow,cart,size,setSize }) {
     const destination = "/skin/" + product.brand + "/" + product.name.split(" ").join("-").toLowerCase() + "/customize";
     const destinationback = "/skin/" + product.brand + "/" + product.name.split(" ").join("-").toLowerCase();
-    const [size, setSize] = useState('Choose')
 
     return (
         <div className='md:flex items-stretch w-full outline-none min-h-[93vh]'>
@@ -389,7 +388,7 @@ export default function Slug({ product, addToCart, buyNow }) {
 
                         <div className='w-full flex justify-around px-5 items-center'>
                             {/* <button className='px-8 text-lg font-extralight py-2 bg-white hover:bg-slate-200 border-slate-300 border rounded-3xl' onClick={() => setSize('Choosing')}>Buy Now</button> */}
-                           <button className='px-8 text-3xl font-semibold py-2 hover:bg-[#f49f1c] bg-[#ffa825] rounded-3xl' onClick={() => { addToCart(product.slug, 1, product.price, product.name + " " + product.color, size, product.color) }}>Add to Cart</button>
+                            <button className='px-8 text-3xl font-semibold py-2 hover:bg-[#f49f1c] bg-[#ffa825] rounded-3xl' onClick={() => { addToCart(product.slug + size, 1, product.price, product.name + " " + product.color, size, product.color, product.img); console.log(cart) }}>Add to Cart</button>
                         </div>
 
 
