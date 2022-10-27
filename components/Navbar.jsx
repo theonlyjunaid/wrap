@@ -35,7 +35,7 @@ const Navbar = ({ logout, user, cart, addToCart, removeFromCart, clearCart, subT
                 </ul>
             </div>
             <div className='text-3xl cursor-pointer flex' >
-                <span onMouseOver={() => setDropdown(true)} onMouseLeave={() => setDropdown(false)}> {dropdown && <div className='absolute top-10 right-10 px-7 bg-black text-white p-2 rounded-md text-lg'>
+                <span onMouseOver={() => setDropdown(true)} onMouseLeave={() => setDropdown(false)}> {dropdown && <div className='absolute top-10 right-10 px-7 bg-black text-white p-2 rounded-md text-lg z-20'>
                     <ul>
                         <li> <Link href='/myaccount'><a>Profile</a></Link></li>
                         <li> <Link href='/orders'><a>Orders</a></Link></li>
@@ -50,7 +50,7 @@ const Navbar = ({ logout, user, cart, addToCart, removeFromCart, clearCart, subT
             </div >
 
 
-            <div ref={ref} className="sidbar  absolute top-0 right-0 bg-gray-400 py-10 px-20 transform transition-transform translate-x-full w-[400px] z-20">
+            {/* <div ref={ref} className="sidbar  absolute top-0 right-0 bg-gray-400 py-10 px-20 transform transition-transform translate-x-full w-[400px] z-20">
                 <h2 className='text-3xl font-semibold text-black'>Shopping Cart</h2>
                 <span className='absolute top-5 right-3 text-2xl text-gray-600 cursor-pointer' onClick={toggleCart}><AiFillCloseCircle /></span>
                 <ol className='list-decimal text-semibold text-black'>
@@ -70,7 +70,7 @@ const Navbar = ({ logout, user, cart, addToCart, removeFromCart, clearCart, subT
                     <Link href="/checkout"><a >    <button disabled={Object.keys(cart).length ==0} className="disabled:bg-indigo-400 disabled:cursor-not-allowed text-white bg-indigo-500 border-0 py-1 px-2 focus:outline-none hover:bg-indigo-600 rounded text-md">Checkout</button></a></Link>
                     <button disabled={Object.keys(cart).length ==0}  className="disabled:bg-indigo-400 disabled:cursor-not-allowed text-white bg-indigo-500 border-0 py-1 px-2 focus:outline-none hover:bg-indigo-300 rounded text-md" onClick={clearCart}>Clear Cart</button>
                 </div>
-            </div>
+            </div> */}
         </div >
     )
 }
