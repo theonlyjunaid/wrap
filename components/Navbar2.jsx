@@ -17,10 +17,10 @@ const Navbar2 = ({user}) => {
    </div>
     <div className='hidden lg:flex items-center text-2xl gap-6 font-neue'>
     <Link href="/"><a><h1 className='text-xl cursor-pointer'>Home</h1></a></Link>
-    <Link href="/"><a><h1 className='text-xl cursor-pointer'>Skin</h1></a></Link>
-    <Link href="/"><a><h1 className='text-xl cursor-pointer'>About</h1></a></Link>
-    <Link href="/"><a><h1 className='text-xl cursor-pointer'>Privacy</h1></a></Link>
-    <Link href="/"><a><h1 className='text-xl cursor-pointer'>Login</h1></a></Link>
+    <Link href="/skin"><a><h1 className='text-xl cursor-pointer'>Skin</h1></a></Link>
+    <Link href="/about"><a><h1 className='text-xl cursor-pointer'>About</h1></a></Link>
+    <Link href="/privacy"><a><h1 className='text-xl cursor-pointer'>Privacy</h1></a></Link>
+    <Link href="/login"><a><h1 className='text-xl cursor-pointer'>Login</h1></a></Link>
     </div>
     <div className='hidden lg:flex items-center relative gap-4 text-2xl'>   
     <AiOutlineSearch className='cursor-pointer absolute ml-3 text-2xl '/>

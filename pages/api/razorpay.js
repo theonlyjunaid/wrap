@@ -15,10 +15,12 @@ const handler = async (req, res) => {
             if (temp in products) {
                 products[temp].qty +=cart[key].qty
                 products[temp].size.push(cart[key].size + " " + cart[key].qty)
+                products[temp].name.push(cart[key].name)
+
             } else {
                 products = { ...products, [temp]: { ...cart[key] } }
                 products[temp].size = [products[temp].size + " " + products[temp].qty]
-                // products[temp].qty = [products[temp].qty]
+                products[temp].name = [products[temp].name]
             }
         }
       

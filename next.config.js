@@ -1,9 +1,6 @@
 /** @type {import('next').NextConfig} */
 module.exports = {
   reactStrictMode: true,
-  fontFamily:{
-    "neue":["Helvetica Neue","Helvetica","Arial","sans-serif"],
-  },
   images: {
     domains: ['res.cloudinary.com', 'v2ecommerce.vercel.app','raw.githubusercontent.com'],
   },

@@ -301,7 +301,7 @@ export default function Slug({ product, addToCart, buyNow,cart,size,setSize }) {
     const destinationback = "/skin/" + product.brand + "/" + product.name.split(" ").join("-").toLowerCase();
 
     return (
-        <div className='md:flex items-stretch w-full outline-none min-h-[93vh]'>
+        <div className='md:flex items-stretch w-full outline-none min-h-[93vh] '>
             {/* flex flex-col justify-center items-center */}
             <div className='w-full md:w-1/2 overflow-y-auto flex justify-self-stretch h-[70vh] md:h-screen md:max-h-[200vh] my-0 mx-auto bg-white'>
                 <div className='w-[100%]  md:h-screen  flex justify-center items-center'>
