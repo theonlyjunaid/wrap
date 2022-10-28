@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Link from "next/link";
+import {useRouter} from "next/router";
 
 
 export default function Example() {
@@ -19,8 +21,9 @@ export default function Example() {
             setPassword(value)
         }
     }
+    let router = useRouter();
     useEffect(() => {
-        if (localStorage.getItem('token')) {
+        if (localStorage.getItem('myuser')) {
             router.push('/')
         }
     }, [])
@@ -35,14 +38,14 @@ export default function Example() {
             body: JSON.stringify(data)
         })
         const json = await res.json()
-        if (!res.ok) throw Error(json.message)
         console.log(json)
         setEmail("")
         setName("")
         setPassword("")
-        toast.success('Your account has been created', {
+        if (json.success) {
+        toast.success(json.message, {
             position: "top-left",
-            autoClose: 5000,
+            autoClose: 3000,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,
@@ -50,6 +53,22 @@ export default function Example() {
             progress: undefined,
             theme: "light",
         });
+        setTimeout(() => {
+            router.push('/login')
+        }, 1500);
+    }
+    else {
+        toast.error(json.message, {
+            position: "top-left",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+        });
+    }
     }
 
     return (
@@ -66,7 +85,7 @@ export default function Example() {
                 pauseOnHover
                 theme="light"
             />
-            <div className="flex min-h-[70vh] items-center justify-center py-12 px-4 sm:px-6 lg:px-8 ">
+            {/* <div className="flex min-h-[70vh] items-center justify-center py-12 px-4 sm:px-6 lg:px-8 ">
                 <div className="w-full max-w-md space-y-8">
                     <div>
 
@@ -164,6 +183,56 @@ export default function Example() {
                             </button>
                         </div>
                     </form>
+                </div>
+            </div> */}
+            <div className="h-screen text-center pt-20">
+                <h1 className="text-3xl font-semibold mt-20">
+                    Create Your account
+                </h1>
+
+                <div className=" w-full ">
+                    <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-5 w-80 my-10 mx-auto">
+
+                        <input
+                            onChange={handleChange}
+                            id="text"
+                            name="name"
+                            type="text"
+                            value={name}
+                            autoComplete="name"
+                            required
+                            className="border-2 border-gray-300 p-2 rounded-lg"
+                            placeholder="Your Name"
+                        />
+                        <input
+                            onChange={handleChange}
+                            id="email"
+                            name="email"
+                            type="email"
+                            value={email}
+                            className="border-2 border-gray-300 p-2 rounded-lg"
+                            placeholder="Email address"
+                        />
+                        <input
+                            onChange={handleChange}
+                            id="password"
+                            name="password"
+                            type="password"
+                            value={password}
+                            className="border-2 border-gray-300 p-2 rounded-lg"
+                            placeholder="Password"
+                        />
+                        <button
+                            type="submit"
+                            className="bg-black text-white p-2 rounded-lg hover:text-gray-300 hover:bg-gray-800"
+                        >
+                            Sign up
+                        </button>
+                    </form>
+                    <div>
+                        <p className="text-sm text-gray-500">Already have an account? <Link href="/login"><a><span className="text-black cursor-pointer hover:text-gray-800">Sign in</span></a></Link></p>
+                    </div>
+
                 </div>
             </div>
         </>

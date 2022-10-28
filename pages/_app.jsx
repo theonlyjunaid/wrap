@@ -3,7 +3,7 @@ import 'tailwindcss/tailwind.css'
 import Head from 'next/head'
 import { useState, useEffect } from 'react'
 import Navbar2 from '../components/Navbar2'
-import Footer from '../components/Footer'
+import Footer2 from '../components/Footer2'
 import { useRouter } from 'next/router'
 import LoadingBar from 'react-top-loading-bar'
 
@@ -95,7 +95,7 @@ console.log(itemCode)
     setKey(Math.random())
     router.push("/")
   }
-  return <div>
+  return <div >
     <LoadingBar
       color='#f11946'
       progress={progress}
@@ -105,7 +105,7 @@ console.log(itemCode)
     />
     <Navbar2 logout={logout} user={user} key={key} cart={cart} addToCart={addToCart} removeFromCart={removeFromCart} clearCart={clearCart} subTotal={subTotal} />
     <Component user={user} cart={cart} addToCart={addToCart} removeFromCart={removeFromCart} clearCart={clearCart} subTotal={subTotal}  {...pageProps} buyNow={buyNow} size={size} setSize={setSize} />
-    <Footer />
+    <Footer2 />
   </div>
 
 }

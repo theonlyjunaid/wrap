@@ -25,8 +25,8 @@ const Navbar2 = ({user}) => {
     <div className='hidden lg:flex items-center relative gap-4 text-2xl'>   
     <AiOutlineSearch className='cursor-pointer absolute ml-3 text-2xl '/>
     <input type="text"  className='border flex items-center rounded-[100px] py-2 px-[48px] w-[180px] cursor-text h-10 bg-[#f5f5f5] text-lg text-gray-600' placeholder='Search' onClick={()=>alert("clciked")}/>
-   {!user && <FaRegUserCircle/>}
-   {user && <FaUserCircle/>}
+   {!user.value && <FaRegUserCircle/>}
+   {user.value && <FaUserCircle/>}
     <Link href="/cart"><a><AiOutlineShoppingCart className='cursor-pointer'/></a></Link>
     
     </div>

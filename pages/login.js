@@ -2,6 +2,7 @@ import { useState, useEffect } from "react"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Router from "next/router";
+import Link from "next/link";
 
 
 export default function Example() {
@@ -18,7 +19,7 @@ export default function Example() {
         }
     }
     useEffect(() => {
-        if (localStorage.getItem('token')) {
+        if (localStorage.getItem('myuser')) {
             router.push('/')
         }
     }, [])
@@ -84,7 +85,7 @@ export default function Example() {
                 theme="light"
             />
 
-            <div className="flex min-h-[70vh] items-center justify-center py-12 px-4 sm:px-6 lg:px-8 ">
+            {/* <div className="flex min-h-[70vh] items-center justify-center py-12 px-4 sm:px-6 lg:px-8 ">
                 <div className="w-full max-w-md space-y-8">
                     <div>
 
@@ -166,6 +167,47 @@ export default function Example() {
                             </button>
                         </div>
                     </form>
+                </div>
+            </div> */}
+
+            <div className="h-screen text-center pt-20">
+                <h1 className="text-3xl font-semibold mt-20">
+                    Login to your account
+                </h1>
+
+                <div className=" w-full ">
+                    <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-5 w-80 my-10 mx-auto">
+
+                        <input
+                            onChange={handleChange}
+                            id="email"
+                            name="email"
+                            type="email"
+                            value={email}
+                            className="border-2 border-gray-300 p-2 rounded-lg"
+                            placeholder="Email address"
+                        />
+                        <input
+                            onChange={handleChange}
+                            id="password"
+                            name="password"
+                            type="password"
+                            value={password}
+                            className="border-2 border-gray-300 p-2 rounded-lg"
+                            placeholder="Password"
+                        />
+                        <Link href="/forgot"><a><p className="text-sm text-gray-500 flex justify-end cursor-pointer hover:text-gray-800">forgot password?</p></a></Link>
+                        <button
+                            type="submit"
+                            className="bg-black text-white p-2 rounded-lg hover:text-gray-300 hover:bg-gray-800"
+                        >
+                            Login
+                        </button>
+                    </form>
+                    <div>
+                        <p className="text-sm text-gray-500">Don't have an account? <Link href="/signup"><a><span className="text-black cursor-pointer hover:text-gray-800">Sign up</span></a></Link></p>
+                    </div>
+
                 </div>
             </div>
         </>

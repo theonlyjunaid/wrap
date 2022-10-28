@@ -4,13 +4,26 @@ import connectDB from "../../middleware/mongoose";
 import Order from "../../model/Order";
 import Product from "../../model/Product";
 import pincode from '../../pincode.json'
+// import { useState } from "react";
 
 const handler = async (req, res) => {
     if (req.method === "POST") {
         const { subTotal, qty, cart, oid, info } = req.body;
-
-
-
+        let products = {};
+        for (let key in cart) {
+            let temp = key.split("-").slice(0, -1).join("-")
+            if (temp in products) {
+                products[temp].qty +=cart[key].qty
+                products[temp].size.push(cart[key].size + " " + cart[key].qty)
+            } else {
+                products = { ...products, [temp]: { ...cart[key] } }
+                products[temp].size = [products[temp].size + " " + products[temp].qty]
+                // products[temp].qty = [products[temp].qty]
+            }
+        }
+      
+//         console.log(cartItem)
+// console.log(cartItem)
         if (!Object.keys(pincode).includes(info.pincode)) {
 
             res.status(200).json({ success: false, message: 'Sorry, we do not deliver to your pincode' });
@@ -28,17 +41,17 @@ const handler = async (req, res) => {
             res.redirect("/");
             return;
         }
-        for (let item in cart) {
+        for (let item in products) {
             console.log(item);
-            const slug = item.split("-").slice(0, -1).join("-")
-            sumTotal += cart[item].price * cart[item].qty;
-            product = await Product.findOne({ slug: slug });
-            if (product?.availableQty < cart[item].qty) {
+            // const slug = item.split("-").slice(0, -1).join("-")
+            sumTotal += products[item].price * products[item].qty;
+            product = await Product.findOne({ slug: item });
+            if (product?.availableQty < products[item].qty || product == null) {
                 res.status(200).json({ success: false, message: "Product is out of stock", cartClear: true });
                 return
-            } else if (product?.price !== cart[item].price) {
+            } else if (product?.price !== products[item].price) {
                 console.log(product)
-                res.status(200).json({ success: false, message: "Cart is tempered", cartClear: true,product:product });
+                res.status(200).json({ success: false, message: "Cart is tempered", cartClear: true });
                 return;
             }
         }
@@ -49,6 +62,7 @@ const handler = async (req, res) => {
 
 
         //check if details is valid
+
 
 
         // Initialize razorpay object
@@ -62,7 +76,7 @@ const handler = async (req, res) => {
             state: info.state,
             pincode: info.pincode,
             amount: subTotal,
-            products: cart,
+            products: products,
             paymentInfo: { 'getting': 'payment info' },
             paymentDump: { 'getting': 'payment dump' }
         });
